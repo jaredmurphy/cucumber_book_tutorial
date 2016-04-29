@@ -1,5 +1,10 @@
+class Account
+    def initialize(amount)
+    end
+end
+
 Given(/^I have deposited \$(\d+) in my account$/) do |amount|
-    pending("Need to design account interface")
+    Account.new(amount.to_i)
 end
 
 When(/^I request \$(\d+)$/) do |amount|
