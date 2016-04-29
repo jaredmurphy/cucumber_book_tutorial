@@ -1,3 +1,11 @@
+module KnowsMyAccount
+    def my_account
+        @my_account ||= Account.new
+    end
+end
+
+World(KnowsMyAccount)
+
 class Account
     def initialize
         @amount = 0
@@ -11,21 +19,27 @@ class Account
     end
 end
 
-CAPTURE_A_NUMBER = Transform /^\d+$/ do |number|
+class Teller 
+    def withdraw_from(account, amount)
+    end
+end
+
+CAPTURE_CASH_AMOUNT = Transform /^\d+$/ do |number|
     number.to_i
 end
 
-Given(/^I have deposited \$(#{CAPTURE_A_NUMBER}) in my account$/) do |amount|
-    my_account = Account.new
-    my_account.deposit(amount)
-    my_account.balance.should eq(amount)
+Given(/^I have deposited \$(#{CAPTURE_CASH_AMOUNT}) in my account$/) do |amount|
+    @my_account = Account.new
+    @my_account.deposit(amount)
+    @my_account.balance.should eq(amount),
         "Expected the balance to be #{amount} but it was #{my_account.balance}"
 end
 
-When(/^I request \$(#{CAPTURE_A_NUMBER})$/) do |amount|
-    pending('How to simulate cash being requested')
+When(/^I withdraw \$(#{CAPTURE_CASH_AMOUNT})$/) do |amount|
+    teller = Teller.new
+    teller.withdraw_from(@my_account, amount)
 end
 
-Then(/^\$(#{CAPTURE_A_NUMBER}) should be dispensed$/) do |amount|
+Then(/^\$(#{CAPTURE_CASH_AMOUNT}) should be dispensed$/) do |amount|
     pending('How to validate that cash was dispensed')
 end
