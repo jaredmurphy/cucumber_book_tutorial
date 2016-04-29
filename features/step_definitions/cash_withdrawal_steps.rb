@@ -1,10 +1,20 @@
 class Account
-    def initialize(amount)
+    def initialize
+        @amount = 0
+    end
+    def deposit(amount)
+        @amount += amount
+    end
+
+    def balance
+        @amount
     end
 end
 
 Given(/^I have deposited \$(\d+) in my account$/) do |amount|
-    Account.new(amount.to_i)
+    my_account = Account.new
+    my_account.deposit(amount.to_i)
+    my_account.balance.should eq(amount.to_i)
 end
 
 When(/^I request \$(\d+)$/) do |amount|
