@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'sinatra'
 gem 'service_manager'
+gem 'rack-protection'
 
 group :development do 
     gem 'rspec' 
